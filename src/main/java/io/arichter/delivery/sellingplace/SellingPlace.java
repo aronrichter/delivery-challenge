@@ -5,17 +5,14 @@ import com.mapbox.geojson.Polygon;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-
-@Entity
 @Getter
 @Setter
+@Document
 public class SellingPlace {
 
     @Id
-    @GeneratedValue
     private Integer id;
 
     private String tradingName;

@@ -1,11 +1,6 @@
 package io.arichter.delivery.sellingplace;
 
-import com.mapbox.geojson.Polygon;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-import java.util.List;
-
-public interface SellingPlaceRepository extends JpaRepository<SellingPlace, Integer> {
-
-    List<SellingPlace> findByAddress(Polygon address);
+public interface SellingPlaceRepository extends MongoRepository<SellingPlace, Integer> {
 }
