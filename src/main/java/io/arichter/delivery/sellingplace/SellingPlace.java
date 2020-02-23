@@ -13,7 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class SellingPlace {
 
     @Id
-    private Integer id;
+    private String id;
 
     private String tradingName;
     private String ownerName;
