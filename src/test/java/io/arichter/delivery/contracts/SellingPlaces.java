@@ -1,39 +1,41 @@
 package io.arichter.delivery.contracts;
 
+import io.arichter.delivery.multipolygon.MultiPolygon;
+import io.arichter.delivery.point.Point;
 import io.arichter.delivery.sellingplace.SellingPlace;
 import io.arichter.delivery.sellingplace.SellingPlaceController;
 import io.arichter.delivery.sellingplace.service.SellingPlaceService;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.test.web.servlet.setup.StandaloneMockMvcBuilder;
+
+import java.util.List;
 
 import static org.mockito.Mockito.when;
 
-@Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class SellingPlaces {
-
-    @Autowired
-    private SellingPlaceController sellingPlaceController;
 
     @Mock
     private SellingPlaceService sellingPlaceService;
 
     @Before
     public void setup() {
-        StandaloneMockMvcBuilder standaloneMockMvcBuilder = MockMvcBuilders.standaloneSetup(sellingPlaceController);
+        SellingPlace sellingPlace = new SellingPlace();
+        sellingPlace.setId("25");
+        sellingPlace.setDocument("20.053.623/0001-30");
+        sellingPlace.setTradingName("Bar Legal");
+        sellingPlace.setOwnerName("Daniel Henrique");
+        sellingPlace.setCoverageArea(null);
+        sellingPlace.setAddress(null);
 
-        RestAssuredMockMvc.standaloneSetup(standaloneMockMvcBuilder);
 
-        when(sellingPlaceService.getSellingPlaceByCoordinates(-43.36556, -22.99669))
-                .thenReturn(new SellingPlace());
+        when(sellingPlaceService.getSellingPlaceByCoordinates(1D, 2D)).thenReturn(sellingPlace);
+
+        RestAssuredMockMvc.standaloneSetup(new SellingPlaceController(sellingPlaceService));
     }
 }

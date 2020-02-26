@@ -114,7 +114,7 @@ public class SellingPlaceServiceImpl implements SellingPlaceService {
     public void validadeDocument(String document) {
         SellingPlace sellingPlace = sellingPlaceRepository.findByDocument(document);
 
-        if (document != null) {
+        if (sellingPlace != null) {
             throw new SellingPlaceAlreadyExistsException();
         }
     }
