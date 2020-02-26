@@ -2,11 +2,10 @@ package io.arichter.delivery.sellingplace;
 
 import io.arichter.delivery.sellingplace.exception.NotFoundException;
 import io.arichter.delivery.sellingplace.service.SellingPlaceService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -19,14 +18,12 @@ public class SellingPlaceController {
         this.sellingPlaceService = sellingPlaceService;
     }
 
-    /*
     @PostMapping
-    public ResponseEntity<Void> create(SellingPlaceRequest sellingPlaceRequest) {
-        String id = sellingPlaceService.create(sellingPlaceRequest);
+    public ResponseEntity<Void> create(@RequestBody SellingPlace sellingPlace) {
+        String id = sellingPlaceService.create(sellingPlace);
 
         return ResponseEntity.created(URI.create(id)).build();
     }
-    */
 
     @GetMapping("{id}")
     public SellingPlace getSellingPlace(@PathVariable String id) {

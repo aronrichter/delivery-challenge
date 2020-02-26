@@ -13,6 +13,7 @@ import io.arichter.delivery.point.Point;
 import io.arichter.delivery.sellingplace.SellingPlace;
 import io.arichter.delivery.sellingplace.SellingPlaceRepository;
 import io.arichter.delivery.sellingplace.exception.CoordinateNullException;
+import io.arichter.delivery.sellingplace.exception.SellingPlaceAlreadyExistsException;
 import io.arichter.delivery.sellingplace.payload.PdvsRequest;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -35,6 +36,8 @@ public class SellingPlaceServiceImpl implements SellingPlaceService {
 
     @Override
     public String create(SellingPlace sellingPlace) {
+        validadeDocument(sellingPlace.getDocument());
+
         sellingPlaceRepository.save(sellingPlace);
 
         return sellingPlace.getId();
@@ -108,6 +111,14 @@ public class SellingPlaceServiceImpl implements SellingPlaceService {
         return new GeometryFactory().createPoint(new Coordinate(latitude, longitude));
     }
 
+    public void validadeDocument(String document) {
+        SellingPlace sellingPlace = sellingPlaceRepository.findByDocument(document);
+
+        if (document != null) {
+            throw new SellingPlaceAlreadyExistsException();
+        }
+    }
+
     @EventListener(ApplicationReadyEvent.class)
     private void importJson() throws FileNotFoundException {
         FileReader jsonFile = new FileReader("pdvs.json");
@@ -121,7 +132,9 @@ public class SellingPlaceServiceImpl implements SellingPlaceService {
             if (e.isJsonObject()) {
                 PdvsRequest pdvsRequest = gson.fromJson(e, PdvsRequest.class);
 
-                pdvsRequest.getPdvs().forEach(this::create);
+                pdvsRequest.getPdvs().stream()
+                        .filter(s -> sellingPlaceRepository.findByDocument(s.getDocument()) == null)
+                        .forEach(this::create);
             }
         }
     }
