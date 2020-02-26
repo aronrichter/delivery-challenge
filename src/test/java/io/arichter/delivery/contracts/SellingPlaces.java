@@ -5,6 +5,7 @@ import io.arichter.delivery.sellingplace.SellingPlaceController;
 import io.arichter.delivery.sellingplace.service.SellingPlaceService;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.test.web.servlet.setup.StandaloneMockMvcBuilder;
 
 import static org.mockito.Mockito.when;
 
+@Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class SellingPlaces {
