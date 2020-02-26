@@ -1,5 +1,6 @@
 package io.arichter.delivery.sellingplace.payload;
 
+import io.arichter.delivery.sellingplace.SellingPlace;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,8 +8,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class MultiPolygonRequest {
+public class PdvsRequest {
 
-    private String type;
-    private List<List<List<List<Double>>>> coordinates;
+    List<SellingPlace> pdvs;
 }
